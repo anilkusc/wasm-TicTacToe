@@ -220,6 +220,7 @@ func next(this js.Value, inputs []js.Value) interface{} {
 	resetBoard()
 	nextButton := doc.Call("getElementById", "next")
 	nextButton.Set("disabled", true)
+	changeInfo("START!")
 	return nil
 }
 func changeInfo(info string) {
