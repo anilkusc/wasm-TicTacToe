@@ -1,2 +1,2 @@
 # wasm-TicTacToe
-Web Assembly Tic-Tac-Toe Game 
+Tic-Tac-Toe Game written in WASM go.
