@@ -1,0 +1,40 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">
+  <script src="wasm_exec.js"></script>
+  <script>
+    if (!WebAssembly.instantiateStreaming) {
+      // polyfill
+      WebAssembly.instantiateStreaming = async (resp, importObject) => {
+        const source = await (await resp).arrayBuffer();
+        return await WebAssembly.instantiate(source, importObject);
+      };
+    }
+
+    const go = new Go();
+    let mod, inst;
+    WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then(
+      async result => {
+        mod = result.module;
+        inst = result.instance;
+        await go.run(inst);
+      }
+    );
+  </script>
+</head>
+
+<body>
+<h5 id="player1">PLAYER 1: 0</h5>
+<h5 id="player2">PLAYER 2: 0</h5>
+<h3 id="turn" >Turn: PLAYER 1</h3>
+<img id="imageX" src="images/X.png" hidden>
+<img id="imageO" src="images/O.png" hidden>
+<canvas id="canvas" width="300" >Your brower does not support canvas.</canvas><br>
+<h4 id="info" >START!</h4>
+<button id="next" onClick= "next();" disabled>NEXT</button>
+<button onClick= "reset();">RESET</button>
+</body>
+
+</html>
